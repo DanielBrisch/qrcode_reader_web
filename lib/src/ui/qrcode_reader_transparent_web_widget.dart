@@ -9,17 +9,18 @@ import 'components/square_clipper.dart';
 import 'qrcode_reader_controller.dart';
 
 /// Method responsible for building the widget to be used in a conditional import.
-Widget buildWidget({
-  required void Function(QRCodeCapture barcodes) onDetect,
-  ErrorBuilder? errorBuilder,
-  double targetSize = 250,
-  Color? outsideColor,
-}) =>
+Widget buildWidget(
+        {required void Function(QRCodeCapture barcodes) onDetect,
+        ErrorBuilder? errorBuilder,
+        double targetSize = 250,
+        Color? outsideColor,
+        double? radius}) =>
     QRCodeReaderTransparentWebWidget(
       onDetect: onDetect,
       errorBuilder: errorBuilder,
       targetSize: targetSize,
       outsideColor: outsideColor,
+      radius: radius,
     );
 
 /// Widget responsible for displaying the camera videos and reading the QR Code.
@@ -28,20 +29,23 @@ class QRCodeReaderTransparentWebWidget extends StatefulWidget {
   final ErrorBuilder? errorBuilder;
   final double targetSize;
   final Color? outsideColor;
+  final double? radius;
 
-  const QRCodeReaderTransparentWebWidget({
-    super.key,
-    required this.onDetect,
-    this.errorBuilder,
-    this.targetSize = 250,
-    this.outsideColor,
-  });
+  const QRCodeReaderTransparentWebWidget(
+      {super.key,
+      required this.onDetect,
+      this.errorBuilder,
+      this.targetSize = 250,
+      this.outsideColor,
+      this.radius});
 
   @override
-  State<QRCodeReaderTransparentWebWidget> createState() => _QRCodeReaderTransparentWebWidgetState();
+  State<QRCodeReaderTransparentWebWidget> createState() =>
+      _QRCodeReaderTransparentWebWidgetState();
 }
 
-class _QRCodeReaderTransparentWebWidgetState extends State<QRCodeReaderTransparentWebWidget> {
+class _QRCodeReaderTransparentWebWidgetState
+    extends State<QRCodeReaderTransparentWebWidget> {
   final QRCodeReaderController controller = QRCodeReaderController();
 
   late StreamSubscription<QRCodeCapture>? qrCodeSubscription;
@@ -87,28 +91,30 @@ class _QRCodeReaderTransparentWebWidgetState extends State<QRCodeReaderTranspare
                 ),
               ),
               child: Center(
-                child: SizedBox(
-                  width: value?.size.width ?? 0,
-                  height: value?.size.height ?? 0,
-                  child: Stack(
-                    children: [
-                      Container(
-                        color: Colors.black,
-                        child: HtmlElementView(viewType: value?.webId ?? ""),
-                      ),
-                      Center(
-                        child: IgnorePointer(
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(widget.radius ?? 0),
+                  child: SizedBox(
+                    width: value?.size.width ?? 0,
+                    height: value?.size.height ?? 0,
+                    child: Stack(
+                      children: [
+                        Container(
+                          color: Colors.black,
+                          child: HtmlElementView(viewType: value?.webId ?? ""),
+                        ),
+                        Center(
                           child: ClipPath(
                             clipper: SquareClipper(widget.targetSize),
                             child: Container(
                               width: double.infinity,
                               height: double.infinity,
-                              color: widget.outsideColor ?? Colors.black.withOpacity(0.5),
+                              color: widget.outsideColor ??
+                                  Colors.black.withOpacity(0.5),
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -119,7 +125,9 @@ class _QRCodeReaderTransparentWebWidgetState extends State<QRCodeReaderTranspare
     );
   }
 
-  Widget errorWidget({required BuildContext context, required QRCodeReaderException exception}) {
+  Widget errorWidget(
+      {required BuildContext context,
+      required QRCodeReaderException exception}) {
     if (widget.errorBuilder == null) {
       return Center(
         child: Text(exception.toString()),

@@ -36,27 +36,15 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: const Text("Example App"),
       ),
-      body: SafeArea(
-        child: Column(
-          children: [
-            QRCodeReaderSquareWidget(
-              onDetect: (QRCodeCapture capture) => setState(() => list.add(capture)),
-              size: 250,
-            ),
-            QRCodeReaderTransparentWidget(
-              onDetect: (QRCodeCapture capture) => setState(() => list.add(capture)),
-              targetSize: 250,
-            ),
-            Expanded(
-              child: ListView.builder(
-                itemCount: list.length,
-                itemBuilder: (_, index) {
-                  return ListTile(title: Text(list[index].raw));
-                },
-              ),
-            ),
-          ],
-        ),
+      body: Column(
+        children: [
+          QRCodeReaderTransparentWidget(
+            onDetect: (QRCodeCapture capture) =>
+                setState(() => list.add(capture)),
+            targetSize: 250,
+            radius: 50,
+          ),
+        ],
       ),
     );
   }

@@ -10,5 +10,6 @@ Widget buildWidget({
   ErrorBuilder? errorBuilder,
   double targetSize = 250,
   Color? outsideColor,
+  double? radius,
 }) =>
     const SizedBox.shrink();

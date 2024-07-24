@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../objects/qrcode_capture.dart';
 import '../typedef/typedef.dart';
-import 'qrcode_reader_transparent_default_widget.dart' if (dart.library.html) 'qrcode_reader_transparent_web_widget.dart';
+import 'qrcode_reader_transparent_default_widget.dart'
+    if (dart.library.html) 'qrcode_reader_transparent_web_widget.dart';
 
 /// Widget responsible for displaying the camera videos and reading the QR Code.
 /// It will only build if it's for web; for other platforms, it will return a SizedBox.
@@ -11,6 +12,7 @@ class QRCodeReaderTransparentWidget extends StatelessWidget {
   final ErrorBuilder? errorBuilder;
   final double targetSize;
   final Color? outsideColor;
+  final double? radius;
 
   /// Widget responsible for displaying the camera and reading the QR Code.
   /// [onDetect] - Function called when the QR Code is detected.
@@ -23,7 +25,8 @@ class QRCodeReaderTransparentWidget extends StatelessWidget {
     required this.onDetect,
     this.errorBuilder,
     this.targetSize = 250,
-    this.outsideColor
+    this.outsideColor,
+    this.radius,
   });
 
   @override
@@ -33,6 +36,7 @@ class QRCodeReaderTransparentWidget extends StatelessWidget {
       errorBuilder: errorBuilder,
       targetSize: targetSize,
       outsideColor: outsideColor,
+      radius: radius,
     );
   }
 }
