@@ -42,7 +42,7 @@ class _MyHomePageState extends State<MyHomePage> {
             onDetect: (QRCodeCapture capture) =>
                 setState(() => list.add(capture)),
             targetSize: 250,
-            radius: 50,
+            radius: 20,
           ),
         ],
       ),

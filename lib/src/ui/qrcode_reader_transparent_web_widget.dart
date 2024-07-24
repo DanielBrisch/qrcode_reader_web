@@ -103,13 +103,15 @@ class _QRCodeReaderTransparentWebWidgetState
                           child: HtmlElementView(viewType: value?.webId ?? ""),
                         ),
                         Center(
-                          child: ClipPath(
-                            clipper: SquareClipper(widget.targetSize),
-                            child: Container(
-                              width: double.infinity,
-                              height: double.infinity,
-                              color: widget.outsideColor ??
-                                  Colors.black.withOpacity(0.5),
+                          child: IgnorePointer(
+                            child: ClipPath(
+                              clipper: SquareClipper(widget.targetSize),
+                              child: Container(
+                                width: double.infinity,
+                                height: double.infinity,
+                                color: widget.outsideColor ??
+                                    Colors.black.withOpacity(0.5),
+                              ),
                             ),
                           ),
                         ),
