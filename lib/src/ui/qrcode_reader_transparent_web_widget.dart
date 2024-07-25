@@ -14,13 +14,13 @@ Widget buildWidget(
         ErrorBuilder? errorBuilder,
         double targetSize = 250,
         Color? outsideColor,
-        double? radius}) =>
+        double? borderRadius}) =>
     QRCodeReaderTransparentWebWidget(
       onDetect: onDetect,
       errorBuilder: errorBuilder,
       targetSize: targetSize,
       outsideColor: outsideColor,
-      radius: radius,
+      borderRadius: borderRadius,
     );
 
 /// Widget responsible for displaying the camera videos and reading the QR Code.
@@ -29,15 +29,16 @@ class QRCodeReaderTransparentWebWidget extends StatefulWidget {
   final ErrorBuilder? errorBuilder;
   final double targetSize;
   final Color? outsideColor;
-  final double? radius;
+  final double? borderRadius;
 
-  const QRCodeReaderTransparentWebWidget(
-      {super.key,
-      required this.onDetect,
-      this.errorBuilder,
-      this.targetSize = 250,
-      this.outsideColor,
-      this.radius});
+  const QRCodeReaderTransparentWebWidget({
+    super.key,
+    required this.onDetect,
+    this.errorBuilder,
+    this.targetSize = 250,
+    this.outsideColor,
+    this.borderRadius,
+  });
 
   @override
   State<QRCodeReaderTransparentWebWidget> createState() =>
@@ -92,15 +93,14 @@ class _QRCodeReaderTransparentWebWidgetState
               ),
               child: Center(
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(widget.radius ?? 0),
+                  borderRadius: BorderRadius.circular(widget.borderRadius ?? 0),
                   child: SizedBox(
                     width: value?.size.width ?? 0,
                     height: value?.size.height ?? 0,
                     child: Stack(
                       children: [
-                        Container(
-                          color: Colors.black,
-                          child: HtmlElementView(viewType: value?.webId ?? ""),
+                        HtmlElementView(
+                          viewType: value?.webId ?? "",
                         ),
                         Center(
                           child: IgnorePointer(

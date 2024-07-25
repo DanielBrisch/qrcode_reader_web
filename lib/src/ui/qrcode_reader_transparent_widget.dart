@@ -12,7 +12,7 @@ class QRCodeReaderTransparentWidget extends StatelessWidget {
   final ErrorBuilder? errorBuilder;
   final double targetSize;
   final Color? outsideColor;
-  final double? radius;
+  final double? borderRadius;
 
   /// Widget responsible for displaying the camera and reading the QR Code.
   /// [onDetect] - Function called when the QR Code is detected.
@@ -26,7 +26,7 @@ class QRCodeReaderTransparentWidget extends StatelessWidget {
     this.errorBuilder,
     this.targetSize = 250,
     this.outsideColor,
-    this.radius,
+    this.borderRadius,
   });
 
   @override
@@ -36,7 +36,7 @@ class QRCodeReaderTransparentWidget extends StatelessWidget {
       errorBuilder: errorBuilder,
       targetSize: targetSize,
       outsideColor: outsideColor,
-      radius: radius,
+      borderRadius: borderRadius,
     );
   }
 }
